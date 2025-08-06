@@ -6,7 +6,7 @@ const messages = [
   "THIS IS YOUR WAY OF CONTRIBUTING TO THE LIVES OF THOSE IN NEED."
 ];
 
-export default function TypingLoader() {
+export default function TypingLoader({ onFinish }: { onFinish: () => void }) {
   const [currentLine, setCurrentLine] = useState(0);
   const [displayedLines, setDisplayedLines] = useState<string[]>(["", ""]);
   const [showLoading, setShowLoading] = useState(false);
@@ -15,6 +15,9 @@ export default function TypingLoader() {
     if (currentLine >= messages.length) {
       // All lines typed, show loading after a pause
       setTimeout(() => setShowLoading(true), 600);
+      setTimeout(() => {
+        if (onFinish) onFinish();
+      }, 2000); // Show loading briefly then finish
       return;
     }
 
@@ -33,7 +36,6 @@ export default function TypingLoader() {
       if (charIndex < messages[currentLine].length) {
         typingTimeout = setTimeout(typeChar, 40);
       } else {
-        // Move to next line after short pause
         setTimeout(() => {
           setCurrentLine((prev) => prev + 1);
         }, 500);
@@ -48,17 +50,14 @@ export default function TypingLoader() {
   return (
     <div className="flex items-center justify-center w-full h-screen bg-black text-white px-4">
       <div className="flex flex-col items-center space-y-6 text-center max-w-4xl">
-        {/* Line 1 */}
         <p className="text-2xl md:text-4xl font-bold tracking-wide">
           {displayedLines[0]}
           {currentLine === 0 && <span className="animate-blink">|</span>}
         </p>
-        {/* Line 2 */}
         <p className="text-lg md:text-2xl font-medium text-gray-300">
           {displayedLines[1]}
           {currentLine === 1 && <span className="animate-blink">|</span>}
         </p>
-        {/* Loading */}
         {showLoading && (
           <p className="text-xl md:text-2xl font-semibold text-yellow-400 animate-pulse">
             LOADING<span className="dot-animate">.</span>

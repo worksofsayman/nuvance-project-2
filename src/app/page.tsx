@@ -1,5 +1,15 @@
+"use client";
+import React, { useEffect, useState } from "react";
 import TypingLoader from "@/components/TypingLoader";
+import Navbar from "@/components/Navbar";
 
 export default function Home() {
-  return <TypingLoader />;
+  const [loadingComplete, setLoadingComplete] = useState(false);
+
+  return (
+    <>
+      {!loadingComplete && <TypingLoader onFinish={() => setLoadingComplete(true)} />}
+      {loadingComplete && <Navbar />}
+    </>
+  );
 }
