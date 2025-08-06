@@ -35,3 +35,26 @@
     content: "";
   }
 }
+
+.custom-cursor {
+  cursor: none;
+}
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background-color: #B3FF00;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.custom-cursor.hovered {
+  background-color: rgba(251, 253, 247, 0.2); /* very light transparent */
+  box-shadow: 0 0 12px rgba(179, 255, 0, 0.3); /* soft glow */
+  transform: translate(-50%, -50%) scale(0.95); /* slightly shrink */
+}
