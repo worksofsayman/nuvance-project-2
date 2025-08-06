@@ -28,7 +28,10 @@ export default function Navbar() {
     const removeHover = () => cursor.classList.remove("hovered");
 
     window.addEventListener("mousemove", move);
-    document.querySelectorAll("a, button, p, div").forEach((el) => {
+
+    // Only target .cursor-target spans for cursor hover effect
+    const targets = document.querySelectorAll(".cursor-target");
+    targets.forEach((el) => {
       el.addEventListener("mouseenter", addHover);
       el.addEventListener("mouseleave", removeHover);
     });
@@ -36,11 +39,15 @@ export default function Navbar() {
     return () => {
       window.removeEventListener("mousemove", move);
       document.body.removeChild(cursor);
+      targets.forEach((el) => {
+        el.removeEventListener("mouseenter", addHover);
+        el.removeEventListener("mouseleave", removeHover);
+      });
     };
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-black overflow-hidden text-white">
+    <div className="relative w-full h-screen bg-black overflow-hidden text-white custom-cursor-root">
       {/* MENU (top-left) */}
       <div className="absolute top-4 left-4 font-semibold tracking-widest cursor-pointer hover:scale-105 transition-transform duration-200">
         MENU
@@ -48,15 +55,16 @@ export default function Navbar() {
       <div className="absolute top-4 right-4 font-bold text-2xl cursor-pointer hover:scale-105 transition-transform duration-200">
         ×
       </div>
+
+      {/* Right nav links */}
       <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-5 text-[90px] font-semibold text-right leading-snug">
         {navItems.map((item) => (
-          <p
-            key={item}
-            className={`transition-all duration-300 cursor-pointer hover:scale-105 hover:-translate-x-32 ${
-                "text-[#888888] hover:text-[#86a85f]"
-            }`}
-          >
-            {item}
+          <p key={item} className="pointer-events-none">
+            <span
+              className="cursor-target inline-block pointer-events-auto transition-all duration-300 hover:scale-110 hover:-translate-x-32 text-[#888888] hover:text-[#B3FF00]"
+            >
+              {item}
+            </span>
           </p>
         ))}
       </div>
@@ -66,7 +74,7 @@ export default function Navbar() {
         {socialItems.map((item) => (
           <p
             key={item}
-            className="text-[#B3FF00] underline cursor-pointer hover:opacity-80 transition-opacity duration-300"
+            className="text-[#B3FF00] customunderline cursor-pointer hover:opacity-80 transition-opacity duration-300"
           >
             {item}
           </p>
