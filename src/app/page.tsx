@@ -6,7 +6,9 @@ import Navbar from "@/components/Navbar";
 import Image from "next/image";
 
 export default function Home() {
-  const [phase, setPhase] = useState<"typing" | "svg" | "bunny" | "hero" | "menu">("typing");
+  const [phase, setPhase] = useState<
+    "typing" | "svg" | "bunny" | "hero" | "menu"
+  >("typing");
 
   useEffect(() => {
     if (phase === "svg") {
@@ -25,16 +27,11 @@ export default function Home() {
 
   return (
     <>
-      {phase === "typing" && (
-        <TypingLoader onFinish={() => setPhase("svg")} />
-      )}
+      {phase === "typing" && <TypingLoader onFinish={() => setPhase("svg")} />}
 
       {phase === "svg" && (
-        <div className="relative w-full h-screen bg-black flex items-center justify-center">
-          <svg
-            viewBox="0 0 800 200"
-            className="w-[80%] h-auto"
-          >
+        <div className="relative w-full bg-black flex items-center justify-center">
+          <svg viewBox="0 0 800 200" className="w-[80%] h-auto">
             <text
               x="50%"
               y="50%"
@@ -45,9 +42,7 @@ export default function Home() {
               stroke="#ff69b4"
               strokeWidth="3"
             >
-              <textPath href="#path">
-                HOOLIGAN
-              </textPath>
+              <textPath href="#path">HOOLIGAN</textPath>
               <animate
                 attributeName="stroke-dashoffset"
                 from="1000"
@@ -103,9 +98,7 @@ export default function Home() {
             MY PET
           </h1>
           {/* HOOLIGAN text */}
-          <h2 className="text-pink-500 text-8xl font-bold z-10">
-            HOOLIGAN
-          </h2>
+          <h2 className="text-pink-500 text-8xl font-bold z-10">HOOLIGAN</h2>
           {/* Bunny */}
           <Image
             src="/bunny.png"

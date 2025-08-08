@@ -8,8 +8,24 @@ interface MenuOverlayProps {
 export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
   if (!isOpen) return null;
 
+  const handleBackgroundClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
+
+  const handleCloseClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Close button clicked"); // Debug log
+    onClose();
+  };
+
   return (
-    <div className="fixed inset-0 z-50 bg-black bg-opacity-95 text-white font-bold">
+    <div
+      className="fixed inset-0 z-50 bg-black bg-opacity-95 text-white font-bold"
+      onClick={handleBackgroundClick}
+    >
       {/* Background Pattern/Texture */}
       <div
         className="absolute inset-0 opacity-10"
@@ -25,8 +41,9 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
 
       {/* Close Button */}
       <button
-        onClick={onClose}
-        className="absolute top-4 right-4 text-white text-2xl hover:text-lime-400 transition-colors duration-300"
+        onClick={handleCloseClick}
+        className="absolute top-4 right-4 text-white text-2xl hover:text-lime-400 transition-colors duration-300 z-50 p-2 cursor-pointer"
+        aria-label="Close menu"
       >
         <X className="w-6 h-6" />
       </button>

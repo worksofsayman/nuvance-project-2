@@ -1,8 +1,20 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import Header from "./Header"; // Assuming you have a Header component
+import Header from "./Header"; //                   `}
+        </style>
+        
+        <Header onMenuClick={() => setIsMenuOpen(true)} />
+        
+        {/* Temporary Scroll Test - Remove this when scrolling is confirmed working */}
+        <div style={{ height: '50vh', background: 'red', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', fontSize: '2rem' }}>
+          SCROLL TEST - Should be able to scroll past this
+        </div>
+        
+        {/* Main Hero Container */}
 import MenuOverlay from "./MenuOverlay";
 import ContributingSection from "./ContributingOverlay";
+import ChooseYourHooligan from "./ChooseYourHooligan";
+import ScrollTest from "./ScrollTest";
 
 const HooliganLanding: React.FC = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -50,53 +62,73 @@ const HooliganLanding: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
-      {/* CSS Keyframes */}
-      <style>
-        {`
-          @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            33% { transform: translateY(-10px) rotate(1deg); }
-            66% { transform: translateY(5px) rotate(-1deg); }
-          }
-          @keyframes pulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.5; }
-          }
-          @keyframes pulseIntense {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
-          }
-          .character-float {
-            animation: float 6s ease-in-out infinite;
-          }
-          .character-clicked {
-            animation: float 6s ease-in-out infinite, pulseIntense 2s ease-in-out;
-          }
-          .glow-pulse {
-            animation: pulse 4s ease-in-out infinite;
-          }
-          .glow-1 { animation-delay: 0s; }
-          .glow-2 { animation-delay: 2s; }
-          .glow-3 { animation-delay: 1s; }
-          .cta-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-          }
-          .cta-button:hover::before {
-            left: 100%;
-          }
-        `}
-      </style>
+    <>
+      {/* Global CSS Reset for Scrolling */}
+      <style jsx global>{`
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: auto !important;
+          overflow-x: hidden;
+          overflow-y: auto !important;
+          scroll-behavior: smooth;
+        }
+        #__next {
+          height: auto !important;
+          min-height: 100vh;
+        }
+        * {
+          box-sizing: border-box;
+        }
+      `}</style>
+      
+      <div className="bg-black text-white relative w-full">
+        {/* CSS Keyframes */}
+        <style>
+          {`
+            @keyframes float {
+              0%, 100% { transform: translateY(0px) rotate(0deg); }
+              33% { transform: translateY(-10px) rotate(1deg); }
+              66% { transform: translateY(5px) rotate(-1deg); }
+            }
+            @keyframes pulse {
+              0%, 100% { opacity: 0.3; }
+              50% { opacity: 0.5; }
+            }
+            @keyframes pulseIntense {
+              0%, 100% { opacity: 0.5; }
+              50% { opacity: 0.8; }
+            }
+            .character-float {
+              animation: float 6s ease-in-out infinite;
+            }
+            .character-clicked {
+              animation: float 6s ease-in-out infinite, pulseIntense 2s ease-in-out;
+            }
+            .glow-pulse {
+              animation: pulse 4s ease-in-out infinite;
+            }
+            .glow-1 { animation-delay: 0s; }
+            .glow-2 { animation-delay: 2s; }
+            .glow-3 { animation-delay: 1s; }
+            .cta-button::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: -100%;
+              width: 100%;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+              transition: left 0.5s;
+            }
+            .cta-button:hover::before {
+              left: 100%;
+            }
+          `}
+        </style>
       <Header onMenuClick={() => setIsMenuOpen(true)} />
-      {/* Main Container */}
-      <div className="min-h-screen relative flex flex-col justify-center items-center p-8">
+      {/* Main Hero Container */}
+      <section className="min-h-screen relative flex flex-col justify-center items-center p-8">
         {/* Background Grid */}
         <div
           className="absolute inset-0 opacity-10 z-0"
@@ -222,13 +254,11 @@ const HooliganLanding: React.FC = () => {
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
       <ContributingSection />
 
-      {/* Digital Characters Section */}
-
-      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+      <ChooseYourHooligan />
 
       {/* Additional Sections */}
       <section className="py-16 px-8 bg-gray-900 text-center">
@@ -278,7 +308,11 @@ const HooliganLanding: React.FC = () => {
         </div>
         <p className="text-xs text-gray-500 mt-4">We can do more together!</p>
       </footer>
+
+      {/* Menu Overlay - Positioned at the end to avoid interference */}
+      <MenuOverlay isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
     </div>
+    </>
   );
 };
 
