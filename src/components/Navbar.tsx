@@ -1,17 +1,22 @@
 "use client";
 
 import { useEffect } from "react";
+import Link from "next/link";
 
 const navItems = [
-  "MAIN",
-  "ABOUT",
-  "COLLECTION",
-  "ROADMAP",
-  "FAQ",
-  "CONTACT US",
+  { name: "MAIN", path: "/" },
+  { name: "ABOUT", path: "/about" },
+  { name: "COLLECTION", path: "/collection" },
+  { name: "ROADMAP", path: "/roadmap" },
+  { name: "FAQ", path: "/faq" },
+  { name: "CONTACT US", path: "/contact" },
 ];
 
-const socialItems = ["DISCORD", "TWITTER", "INSTAGRAM"];
+const socialItems = [
+  { name: "DISCORD", url: "https://discord.com" },
+  { name: "TWITTER", url: "https://twitter.com" },
+  { name: "INSTAGRAM", url: "https://instagram.com" },
+];
 
 export default function Navbar() {
   useEffect(() => {
@@ -29,7 +34,6 @@ export default function Navbar() {
 
     window.addEventListener("mousemove", move);
 
-    // Only target .cursor-target spans for cursor hover effect
     const targets = document.querySelectorAll(".cursor-target");
     targets.forEach((el) => {
       el.addEventListener("mouseenter", addHover);
@@ -59,12 +63,10 @@ export default function Navbar() {
       {/* Right nav links */}
       <div className="absolute right-8 top-1/2 transform -translate-y-1/2 space-y-5 text-[90px] font-semibold text-right leading-snug">
         {navItems.map((item) => (
-          <p key={item} className="pointer-events-none">
-            <span
-              className="cursor-target inline-block pointer-events-auto transition-all duration-300 hover:scale-110 hover:-translate-x-32 text-[#888888] hover:text-[#B3FF00]"
-            >
-              {item}
-            </span>
+          <p key={item.name} className="pointer-events-none">
+            <Link href={item.path} className="cursor-target inline-block pointer-events-auto transition-all duration-300 hover:scale-110 hover:-translate-x-32 text-[#888888] hover:text-[#B3FF00]">
+              {item.name}
+            </Link>
           </p>
         ))}
       </div>
@@ -72,12 +74,15 @@ export default function Navbar() {
       {/* Bottom-left Socials */}
       <div className="absolute bottom-8 left-8 space-y-2 font-semibold text-sm">
         {socialItems.map((item) => (
-          <p
-            key={item}
+          <a
+            key={item.name}
+            href={item.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-[#B3FF00] customunderline cursor-pointer hover:opacity-80 transition-opacity duration-300"
           >
-            {item}
-          </p>
+            {item.name}
+          </a>
         ))}
       </div>
     </div>
